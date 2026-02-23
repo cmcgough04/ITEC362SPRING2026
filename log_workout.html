@@ -1,0 +1,194 @@
+<!doctype html>
+<!--
+  log_workout.html
+  "Log Workout" page for Fitness Tracker
+  - Semantic HTML5 structure
+  - External CSS in styles_log.css
+  - Navigation links to homepage (index.html) and contact (contact_revamped.html)
+  - Accessible form controls with labels and ARIA where appropriate
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fitness Tracker — Log Workout</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="log">
+  <div class="page">
+
+    <!-- Header / navigation -->
+    <header class="site-header" role="banner">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Fitness Tracker home">
+          <span class="brand-logo" role="img" aria-label="Fitness Tracker logo"></span>
+          <span class="brand-name">Fitness Tracker</span>
+        </a>
+
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+          <ul>
+            <li><a href="index.html">Home Page</a></li>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="contact.html">Contact Info</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="account.html">Account</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="container main" id="main" role="main">
+      <header class="page-head">
+        <h1>Log Workout</h1>
+        <p class="lead">Quickly record workouts so you can track progress over time.</p>
+      </header>
+
+      <!-- Form panel -->
+      <section class="panel">
+        <form id="logForm" class="log-form" autocomplete="on" novalidate>
+          <!-- top row: workout type + duration -->
+          <div class="row">
+            <div class="field">
+              <label for="workoutType">Workout type</label>
+              <select id="workoutType" name="workoutType" required>
+                <option value="">Choose...</option>
+                <option>Running</option>
+                <option>Cycling</option>
+                <option>Strength Training</option>
+                <option>Yoga</option>
+                <option>HIIT</option>
+                <option>Walk</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="duration">Duration (minutes)</label>
+              <input id="duration" name="duration" type="number" min="1" inputmode="numeric" placeholder="e.g. 45" required>
+            </div>
+          </div>
+
+          <!-- single row: intensity -->
+          <div class="row">
+            <div class="field full">
+              <label for="intensity">Intensity</label>
+              <select id="intensity" name="intensity" required>
+                <option value="">Choose intensity</option>
+                <option>Low</option>
+                <option>Moderate</option>
+                <option>High</option>
+                <option>Max Effort</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- notes -->
+          <div class="row">
+            <div class="field full">
+              <label for="notes">Notes</label>
+              <textarea id="notes" name="notes" rows="6" placeholder="Anything to remember about this workout..."></textarea>
+            </div>
+          </div>
+
+          <!-- bottom row: start time + date -->
+          <div class="row">
+            <div class="field">
+              <label for="startTime">Start time</label>
+              <input id="startTime" name="startTime" type="time">
+            </div>
+
+            <div class="field">
+              <label for="date">Date</label>
+              <input id="date" name="date" type="date" required>
+            </div>
+          </div>
+
+          <!-- actions -->
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Save Workout</button>
+            <button type="button" id="saveDraft" class="btn btn-ghost">Save Draft</button>
+            <div id="formStatus" class="form-status" aria-live="polite"></div>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-inner">
+        <p>&copy; <span id="year"></span> Fitness Tracker</p>
+        <p class="small-note"><a href="contact_revamped.html">Contact</a> · <a href="index.html">Home</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // update footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (function(){
+      const form = document.getElementById('logForm');
+      const status = document.getElementById('formStatus');
+      const saveBtn = document.getElementById('saveDraft');
+
+      function show(msg, ok=true){
+        status.textContent = msg;
+        status.className = 'form-status ' + (ok ? 'ok' : 'error');
+      }
+
+      // load draft if exists
+      const draft = JSON.parse(localStorage.getItem('ft_log_draft') || 'null');
+      if(draft){
+        ['workoutType','duration','intensity','notes','startTime','date'].forEach(k=>{
+          if(draft[k] && document.getElementById(k)) document.getElementById(k).value = draft[k];
+        });
+      }
+
+      saveBtn.addEventListener('click', function(){
+        const data = {
+          workoutType: document.getElementById('workoutType').value,
+          duration: document.getElementById('duration').value,
+          intensity: document.getElementById('intensity').value,
+          notes: document.getElementById('notes').value,
+          startTime: document.getElementById('startTime').value,
+          date: document.getElementById('date').value,
+          savedAt: new Date().toISOString()
+        };
+        localStorage.setItem('ft_log_draft', JSON.stringify(data));
+        show('Draft saved locally.');
+      });
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const workoutType = document.getElementById('workoutType').value.trim();
+        const duration = document.getElementById('duration').value.trim();
+        const intensity = document.getElementById('intensity').value.trim();
+        const date = document.getElementById('date').value.trim();
+
+        if(!workoutType || !duration || !intensity || !date){
+          show('Please complete all required fields.', false);
+          return;
+        }
+
+        // demo: save to localStorage (replace with API call in production)
+        const payload = {
+          workoutType, duration, intensity,
+          notes: document.getElementById('notes').value.trim(),
+          startTime: document.getElementById('startTime').value.trim(),
+          date,
+          createdAt: new Date().toISOString()
+        };
+        const stored = JSON.parse(localStorage.getItem('ft_workouts')||'[]');
+        stored.unshift(payload);
+        localStorage.setItem('ft_workouts', JSON.stringify(stored.slice(0,200)));
+
+        // cleanup
+        localStorage.removeItem('ft_log_draft');
+        form.reset();
+        show('Workout saved locally. Great job!', true);
+      });
+    })();
+  </script>
+</body>
+</html>
