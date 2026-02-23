@@ -1,62 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fitness Tracker | Sign Up</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fitness Tracker — Sign Up</title>
+  <!-- Single master stylesheet used by all pages -->
   <link rel="stylesheet" href="styles.css">
 </head>
+<body class="signup">
+  <!-- Header (same site header) -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Fitness Tracker home">
+        <img src="images/logo.png" alt="Fitness Tracker logo" class="logo-img" style="height:84px;width:auto;display:block;">
+        <span class="brand-name">Fitness Tracker</span>
+      </a>
 
-<body>
-  <div class="background">
-    <div class="container">
-
-      <nav>
-        <div class="logo">
-          🏃‍♂️ <span>FITNESS</span> TRACKER
-        </div>
-
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
         <ul>
-          <li><a href="index.html">Home Page</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-          <li><a href="signup.html">Sign Up</a></li>
-          <li><a href="login.html">Login</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="contact_revamped.html">Contact</a></li>
+          <li><a href="log_workout.html">Log Workout</a></li>
         </ul>
       </nav>
+    </div>
+  </header>
 
-      <h1 class="page-title">Sign Up</h1>
-      <p class="page-subtitle">
-        Sign up for free today by entering your name, age, <br>
-        email and password. All secured by Fitness Tracker.
-      </p>
+  <main class="container" id="main" role="main">
+    <header class="page-head" style="padding:28px 0;">
+      <h1>Create your account</h1>
+      <p class="lead">Sign up to track workouts, set goals, and view insights.</p>
+    </header>
 
-      <div class="form-box">
-        <h2>Sign Up For Free Today</h2>
+    <section class="panel" aria-labelledby="signup-heading">
+      <div style="max-width:720px;margin:0 auto;">
+        <h2 id="signup-heading" style="margin:0 0 14px;">New account</h2>
 
-        <form action="#" method="POST">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        <form id="signupForm" class="auth-form" action="#" method="post" autocomplete="on" novalidate>
+          <div class="form-row">
+            <label for="firstName">First name</label>
+            <input id="firstName" name="firstName" type="text" required placeholder="Jane">
+          </div>
 
-          <label for="dob">Date of Birth</label>
-          <input type="date" id="dob" name="dob" required>
+          <div class="form-row">
+            <label for="lastName">Last name</label>
+            <input id="lastName" name="lastName" type="text" required placeholder="Doe">
+          </div>
 
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          <div class="form-row">
+            <label for="signupEmail">Email address</label>
+            <input id="signupEmail" name="email" type="email" required placeholder="you@example.com" autocomplete="email">
+          </div>
 
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Create a password" required>
+          <div class="form-row" style="display:flex;gap:12px;">
+            <div style="flex:1;display:flex;flex-direction:column;">
+              <label for="signupPassword">Password</label>
+              <input id="signupPassword" name="password" type="password" required minlength="8" placeholder="Create a password" autocomplete="new-password">
+            </div>
 
-          <button type="submit">Sign Up</button>
+            <div style="flex:1;display:flex;flex-direction:column;">
+              <label for="signupPasswordConfirm">Confirm password</label>
+              <input id="signupPasswordConfirm" name="passwordConfirm" type="password" required minlength="8" placeholder="Confirm password" autocomplete="new-password">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="timezone">Timezone (optional)</label>
+            <select id="timezone" name="timezone">
+              <option value="">Select timezone</option>
+              <option>UTC−08:00 Pacific Time (US & Canada)</option>
+              <option>UTC−05:00 Eastern Time (US & Canada)</option>
+              <option>UTC+00:00 Greenwich Mean Time</option>
+              <option>UTC+01:00 Central European Time</option>
+            </select>
+          </div>
+
+          <div style="margin-top:6px;">
+            <label style="display:inline-flex;align-items:center;gap:10px;">
+              <input type="checkbox" id="tos" name="tos" required> I agree to the <a href="#" style="color:var(--accent-1);font-weight:700;text-decoration:underline;">Terms of Service</a>.
+            </label>
+          </div>
+
+          <div class="form-actions" style="margin-top:14px;">
+            <button type="submit" class="btn btn-primary">Create account</button>
+            <a href="login.html" class="btn btn-ghost" role="button">Already have an account?</a>
+          </div>
+
+          <div id="signupStatus" class="form-status" aria-live="polite" style="margin-top:12px;"></div>
         </form>
       </div>
+    </section>
+  </main>
 
-      <div class="heartbeat"></div>
-
-      <footer>
-        © Fitness Tracker <span>2026</span>
-      </footer>
-
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year-signup"></span> Fitness Tracker</p>
+      <p class="small-note"><a href="contact_revamped.html">Contact</a> · <a href="index.html">Home</a></p>
     </div>
-  </div>
+  </footer>
+
+  <script>
+    document.getElementById('year-signup').textContent = new Date().getFullYear();
+
+    // Basic client-side validation & demo behavior (for assignment/demo only)
+    document.getElementById('signupForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const pw = document.getElementById('signupPassword').value.trim();
+      const pw2 = document.getElementById('signupPasswordConfirm').value.trim();
+      const status = document.getElementById('signupStatus');
+
+      if(pw.length < 8){
+        status.textContent = 'Password must be at least 8 characters.';
+        status.className = 'form-status error';
+        return;
+      }
+      if(pw !== pw2){
+        status.textContent = 'Passwords do not match.';
+        status.className = 'form-status error';
+        return;
+      }
+
+      status.textContent = 'Account created (demo). You can now sign in.';
+      status.className = 'form-status ok';
+      // production: send to server and handle response
+    });
+  </script>
 </body>
 </html>
