@@ -1,0 +1,373 @@
+/* ===========================
+   styles.css — MERGED & CLEAN
+   Sources: styles_contact.css, styles_revamped.css, styles_log.css
+   Combines header/nav behavior that worked on index plus contact/log visuals.
+   Edit :root variables to swap logo/background/colors.
+   =========================== */
+
+/* ---------------------------
+   THEME / VARIABLES
+   --------------------------- */
+:root{
+  --brand-logo: url('images/logo.png');
+  --brand-background: url('images/background.png');
+
+  --accent-1: #4fd1c5;
+  --accent-2: #ff7b7b;
+  --accent-grad: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+  --accent: #ff8a3d;
+  --accent-2b: #ffb26b;
+
+  --text-main: #ffffff;
+  --text-muted: rgba(235,245,255,0.85);
+  --glass: rgba(255,255,255,0.03);
+
+  --card-radius: 12px;
+  --container-max: 1100px;
+  --font-sans: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ---------------------------
+   RESET & BASE
+   --------------------------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: var(--font-sans);
+  color:var(--text-main);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+
+  background:
+    linear-gradient(rgba(4,10,20,0.28), rgba(4,6,12,0.7)),
+    var(--brand-background) center/cover fixed no-repeat;
+  min-height:100vh;
+  padding-bottom:32px;
+}
+
+/* Generic container */
+.container{width:92%;max-width:var(--container-max);margin:0 auto}
+
+/* Accessibility helper */
+.sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+
+/* ---------------------------
+   HEADER / NAV (stable & consistent)
+   - uses the header/nav behavior that was working on the index
+   - ensures logo and nav are vertically aligned across pages
+   --------------------------- */
+.site-header{padding:18px 0;position:relative;z-index:40}
+.header-inner{
+  display:flex;
+  align-items:center;        /* vertical center for logo + nav */
+  justify-content:space-between;
+  gap:16px;
+  width:100%;
+  box-sizing:border-box;
+  flex-wrap:nowrap;
+}
+
+/* Brand (logo + name) */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:inherit;
+  flex:0 0 auto;
+}
+.brand-logo{
+  width:92px;
+  height:92px;
+  min-width:92px;
+  background-image:var(--brand-logo);
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  border-radius:8px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.6);
+  display:inline-block;
+}
+.brand-name{font-weight:800;letter-spacing:0.6px;font-size:18px;color:var(--text-main)}
+
+/* Main nav */
+.main-nav{margin-left:16px;display:flex;align-items:center;justify-content:flex-end;flex:1 1 0%}
+.main-nav ul{display:flex;gap:14px;list-style:none;margin:0;padding:0;align-items:center}
+.main-nav a{
+  color:rgba(255,255,255,0.92);
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:8px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  line-height:1;
+}
+.main-nav a:hover{background:rgba(255,255,255,0.03)}
+.main-nav a.active{background:rgba(255,255,255,0.04)}
+
+/* Small screen header behavior */
+@media (max-width:900px){
+  .header-inner{flex-wrap:wrap;align-items:center}
+  .brand-name{display:none}
+  .main-nav{margin-left:0;justify-content:flex-start;width:100%}
+  .main-nav ul{gap:10px;flex-wrap:wrap}
+  .brand-logo{width:72px;height:72px;min-width:72px}
+}
+
+/* ---------------------------
+   GLOBAL UI: panels, cards, buttons
+   --------------------------- */
+.panel{
+  margin:12px auto;padding:18px;border-radius:var(--card-radius);
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 80px rgba(2,6,23,0.6);
+}
+.card{padding:18px;border-radius:var(--card-radius);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+.card-title{font-size:20px;margin:0 0 8px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:10px 16px;font-weight:800;cursor:pointer;border:0;text-decoration:none}
+.btn-primary{background:var(--accent-grad);color:#07121a;box-shadow:0 14px 40px rgba(255,120,120,0.12)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.08)}
+
+/* Headings & lead */
+h1,h2,h3{font-weight:800;color:var(--text-main)}
+.lead{color:var(--text-muted);max-width:700px;margin-bottom:12px}
+
+/* ---------------------------
+   HOMEPAGE (hero, features)
+   --------------------------- */
+.hero-wrap{padding:28px 0 40px}
+.hero{
+  padding:36px 28px 48px;border-radius:18px;
+  background: linear-gradient(180deg, rgba(8,14,26,0.36), rgba(6,10,18,0.48));
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 24px 80px rgba(2,6,23,0.7);
+  max-width:var(--container-max);margin:0 auto;
+}
+.badge{display:flex;gap:10px;align-items:center;margin-bottom:18px}
+.badge-pill{background:rgba(255,255,255,0.08);padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px;color:#fff;border:1px solid rgba(255,255,255,0.03)}
+.hero-title{font-size:clamp(30px,6vw,48px);line-height:1.02;margin:10px 0 12px;font-weight:800}
+.hero-sub{color:var(--text-muted);margin-bottom:20px;max-width:680px;font-size:16px}
+.hero-ctas{display:flex;gap:18px;align-items:center;margin-top:6px}
+
+/* features */
+.features{margin-top:26px;display:grid;gap:16px;grid-template-columns:1fr;max-width:820px}
+.feature-card{display:flex;gap:18px;align-items:flex-start;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+
+/* ---------------------------
+   CONTACT PAGE
+   --------------------------- */
+/* layout */
+.grid{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+@media (max-width:880px){ .grid{grid-template-columns:1fr} .page-head{text-align:center} }
+
+/* form controls */
+.form-row{margin-bottom:14px;display:flex;flex-direction:column;gap:8px}
+.form-row label{font-size:14px;color:rgba(255,255,255,0.92)}
+input[type="text"],input[type="email"],select,textarea{
+  background:rgba(0,0,0,0.42);border:1px solid rgba(255,255,255,0.04);color:#eaf6ff;padding:12px;border-radius:10px;font-size:15px;outline:none;transition:box-shadow .12s ease, transform .08s ease;
+}
+input:focus,textarea:focus,select:focus{box-shadow:0 8px 26px rgba(79,209,197,0.06);transform:translateY(-1px);border-color:rgba(255,255,255,0.08)}
+textarea{min-height:140px;resize:vertical}
+
+/* form actions */
+.form-actions{display:flex;gap:12px;align-items:center;margin-top:6px}
+@media (max-width:520px){ .form-actions{display:flex;flex-direction:column;gap:10px} .btn{width:100%} }
+
+/* support card specifics */
+.support-card{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.035);box-shadow:0 12px 40px rgba(2,6,23,0.55)}
+.support-card h3{margin:0 0 10px;font-size:18px}
+.support-card .muted{color:var(--text-muted);margin-bottom:8px;line-height:1.45}
+.note{font-size:14px;color:rgba(235,245,255,0.85)}
+.sep{border:none;border-top:1px solid rgba(255,255,255,0.04);margin:12px 0;opacity:0.6}
+.contact-list{list-style:none;padding:0;margin:8px 0}
+.contact-list li{margin-bottom:8px}
+
+/* strong, high-contrast contact links */
+.support-card .contact-list a,
+.contact-list a{
+  color:#ffffff !important;
+  font-weight:700;
+  text-decoration:underline;
+  text-shadow:0 0 6px rgba(0,0,0,0.45);
+}
+.support-card .contact-list a:hover,
+.contact-list a:hover{color:var(--accent-1) !important}
+
+/* ---------------------------
+   LOG WORKOUT PAGE
+   --------------------------- */
+.log-form{max-width:760px;margin:0 auto}
+.row{display:flex;gap:16px;margin-bottom:14px;align-items:flex-end}
+.row .field{flex:1;display:flex;flex-direction:column;min-width:0}
+.field.full{flex-basis:100%}
+
+/* inputs shared */
+select,input[type="number"],input[type="time"],input[type="date"],textarea{
+  background:rgba(0,0,0,0.42);border:1px solid rgba(255,255,255,0.04);color:#eaf6ff;padding:12px;border-radius:10px;font-size:15px;outline:none;transition:box-shadow .12s ease, transform .08s ease;
+}
+textarea{min-height:120px;resize:vertical}
+
+/* remove number spinner */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+input[type="number"]{-moz-appearance:textfield}
+
+/* actions */
+.actions{display:flex;gap:12px;align-items:center;margin-top:6px}
+.form-status{margin-left:8px;font-weight:700}
+.form-status.ok{color:#7bd389}
+.form-status.error{color:#ff9a8a}
+
+/* ---------------------------
+   FOOTER
+   --------------------------- */
+.site-footer{border-top:1px solid rgba(255,255,255,0.03);padding:16px 0;text-align:center;color:rgba(235,245,255,0.7)}
+.site-footer a{color:rgba(255,255,255,0.9);text-decoration:none}
+
+/* ---------------------------
+   PAGE-SPECIFIC TWEAKS (body classes)
+   Use body.home / body.contact / body.log where needed
+   --------------------------- */
+body.home .hero{margin-top:8px}
+body.contact .panel{max-width:980px}
+body.log .log-form{max-width:820px}
+
+/* ---------------------------
+   RESPONSIVE SAFEGUARDS
+   --------------------------- */
+@media (max-width:1100px){ .hero{padding:22px} }
+@media (max-width:900px){
+  .header-inner{flex-direction:column;align-items:flex-start;gap:12px}
+  .brand-name{display:none}
+  .brand-logo{width:72px;height:72px;min-width:72px}
+  .main-nav{margin-left:0;justify-content:flex-start;width:100%}
+  .main-nav ul{gap:10px;flex-wrap:wrap}
+  .hero-title{font-size:28px}
+  .hero-ctas{flex-direction:column}
+  .btn{width:100%}
+}
+@media (max-width:520px){
+  .brand-logo{width:64px;height:64px}
+  .lead{font-size:15px}
+  .row{flex-direction:column}
+}
+
+/* ---------------------------
+   FINAL SAFETY OVERRIDES (if needed)
+   Keep these minimal — remove if you see conflicts
+   --------------------------- */
+/* Ensure nav alignment priority */
+.header-inner *{box-sizing:border-box}
+
+/* ===========================================
+   UNIVERSAL NAV ALIGNMENT FIX (paste at EOF)
+   Covers many header/nav markup variants:
+   - .header-inner / header nav / .main-nav / nav .links
+   - <img class="logo-img"> or .brand-logo (CSS-backed)
+   - tries to avoid forced heights; uses flex centering
+   =========================================== */
+
+/* Reset potential stray offsets that could shift nav vertically */
+.header-inner, header, .site-header, .brand, .brand-logo, .brand-name,
+.main-nav, nav, nav .links, .main-nav ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  position: relative !important;
+  top: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Make header a reliable flex container */
+header.site-header, .site-header, .header-inner {
+  display: flex !important;
+  align-items: center !important;      /* vertical centering */
+  justify-content: space-between !important;
+  gap: 16px !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+}
+
+/* Brand / logo block - align center */
+.brand, .logo, .brand-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex: 0 0 auto !important;
+}
+
+/* If logo is an <img>, make it inline-block and vertically centered */
+img.logo-img, img.logo, .brand-logo img {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  max-height: 88px !important;    /* keeps logo from forcing header taller */
+  height: auto !important;
+}
+
+/* If logo is CSS-backed (element with background-image) */
+.brand-logo, .logo-box {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  width: auto !important;
+  max-height: 88px !important;
+  height: 88px !important;
+  background-size: contain !important;
+  background-position: center !important;
+}
+
+/* Main nav: take remaining space and align items vertically center */
+.main-nav, nav, nav.main, .nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex: 1 1 0% !important;
+  margin-left: 12px !important;
+}
+
+/* Inline nav list and center links */
+.main-nav ul, nav ul, .nav ul, nav .links {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+/* Nav links should not have extra vertical padding/margin */
+.main-nav a, nav a, .nav a, nav .links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  line-height: 1 !important;
+  height: auto !important;
+  margin: 0 !important;
+}
+
+/* Remove any stray transform offsets on nav/link items */
+.main-nav a, nav a, .nav a { transform: none !important; }
+
+/* Small screens: allow header to wrap but keep items centered */
+@media (max-width: 900px) {
+  header.site-header, .header-inner { flex-wrap: wrap !important; align-items: center !important; }
+  .main-nav { justify-content: flex-start !important; margin-left: 0 !important; width: 100% !important; }
+  .brand-name, .brand-text { display: none !important; } /* optional */
+}
+
+/* Small pixel nudge helpers (use only if needed)
+   Uncomment a single line to nudge the nav up/down on the homepage specifically.
+   Start with -1px or -2px; change value by 1px if needed. */
+/* body.home .main-nav { transform: translateY(-1px) !important; } */
+/* body.home nav { transform: translateY(-1px) !important; } */
+/* body.home .main-nav { transform: translateY(-2px) !important; } */
+
+/* Final safety: make sure header z-index stays above page for visual stability */
+header, .site-header { z-index: 50 !important; }
