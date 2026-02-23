@@ -53,6 +53,300 @@
       </div>
     </div>
   </section>
+<script>
+/* Enhanced calendar that reads:
+   - ft_calendar_events_v1 (manual events)
+   - ft_workouts_v1 (workouts logged from log_workout page)
+   Then merges them to show workouts on days and in the selected-day list.
+*/
 
+(function () {
+  // DOM refs
+  const monthLabel = document.getElementById('monthLabel');
+  const yearLabel = document.getElementById('yearLabel');
+  const prevBtn = document.getElementById('prevMonth');
+  const nextBtn = document.getElementById('nextMonth');
+  const todayBtn = document.getElementById('todayBtn');
+  const calendarGrid = document.querySelector('.calendar-grid');
+  const selectedDayLabel = document.getElementById('selectedDayLabel');
+  const selectedDayInfo = document.getElementById('selectedDayInfo');
+  const eventsList = document.getElementById('eventsList');
+  const eventForm = document.getElementById('eventForm');
+  const eventTitle = document.getElementById('eventTitle');
+  const clearDayBtn = document.getElementById('clearDay');
+  const yearEl = document.getElementById('year-calendar');
+
+  // dates
+  let today = new Date();
+  let viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+  let selectedDate = null;
+
+  const KEY_EVENTS = 'ft_calendar_events_v1';
+  const KEY_WORKOUTS = 'ft_workouts_v1';
+
+  // helpers for storing/reading
+  function safeParseJSON(s, fallback){ try { return JSON.parse(s||'null') || fallback; } catch(e){ return fallback; } }
+  function loadEvents() { return safeParseJSON(localStorage.getItem(KEY_EVENTS), {}); }
+  function saveEvents(obj) { localStorage.setItem(KEY_EVENTS, JSON.stringify(obj)); }
+  function loadWorkouts() { return safeParseJSON(localStorage.getItem(KEY_WORKOUTS), []); }
+
+  // Create a map of dateKey -> [items], merging events + workouts (workouts marked)
+  function buildDateMap() {
+    const map = {}; // { "YYYY-MM-DD": [ {type:'event'|'workout', title:'', meta:{}}, ... ] }
+    // calendar events (legacy)
+    const events = loadEvents();
+    for (const k in events) {
+      map[k] = map[k] || [];
+      (events[k] || []).forEach(ev => map[k].push({ type: 'event', title: ev, meta: {} }));
+    }
+    // workouts
+    const workouts = loadWorkouts();
+    workouts.forEach(w => {
+      if (!w || !w.date) return;
+      map[w.date] = map[w.date] || [];
+      map[w.date].push({
+        type: 'workout',
+        title: (w.type || 'Workout') + (w.duration ? ` — ${w.duration}m` : ''),
+        meta: w
+      });
+    });
+    return map;
+  }
+
+  function renderHeader() {
+    const opts = { month: 'long' };
+    monthLabel.textContent = viewDate.toLocaleString(undefined, opts);
+    yearLabel.textContent = viewDate.getFullYear();
+  }
+
+  function clearDayCells() {
+    while (calendarGrid.children.length > 7) calendarGrid.removeChild(calendarGrid.lastChild);
+  }
+
+  function renderCalendar() {
+    clearDayCells();
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const startWeekday = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // placeholders
+    for (let i = 0; i < startWeekday; i++) {
+      const blank = document.createElement('div'); blank.setAttribute('aria-hidden','true');
+      calendarGrid.appendChild(blank);
+    }
+
+    const dateMap = buildDateMap();
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateKey = `${year}-${String(month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const cell = document.createElement('button');
+      cell.className = 'calendar-day card';
+      cell.type = 'button';
+      cell.dataset.date = dateKey;
+      cell.style.textAlign = 'left';
+      cell.style.padding = '10px';
+      cell.style.borderRadius = '10px';
+      cell.style.border = '1px solid rgba(255,255,255,0.03)';
+      cell.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008))';
+
+      // day number
+      const hd = document.createElement('div'); hd.style.fontWeight='800'; hd.style.marginBottom='6px'; hd.textContent = d;
+      cell.appendChild(hd);
+
+      // add small markers for items (colored dots for workouts/events)
+      const items = dateMap[dateKey] || [];
+      if (items.length) {
+        const row = document.createElement('div'); row.style.display='flex'; row.style.gap='6px';
+        items.slice(0,3).forEach(it => {
+          const dot = document.createElement('span');
+          dot.title = it.title;
+          dot.style.width='8px'; dot.style.height='8px'; dot.style.borderRadius='50%';
+          if (it.type === 'workout') dot.style.background = 'linear-gradient(90deg,var(--accent-1),var(--accent-2))';
+          else dot.style.background = 'rgba(120,160,255,0.9)';
+          row.appendChild(dot);
+        });
+        if (items.length > 3) {
+          const more = document.createElement('span'); more.textContent = `+${items.length - 3}`; more.style.color='var(--text-muted)';
+          row.appendChild(more);
+        }
+        cell.appendChild(row);
+      } else {
+        const spacer = document.createElement('div'); spacer.style.height = '8px'; cell.appendChild(spacer);
+      }
+
+      // highlight today
+      const isToday = (new Date()).toDateString() === (new Date(year, month, d)).toDateString();
+      if (isToday) {
+        cell.style.boxShadow = '0 8px 30px rgba(79,209,197,0.06)';
+        cell.style.border = '1px solid rgba(79,209,197,0.18)';
+      }
+
+      cell.addEventListener('click', ()=> selectDate(dateKey));
+      calendarGrid.appendChild(cell);
+    }
+
+    renderHeader();
+  }
+
+  function selectDate(dateKey) {
+    selectedDate = dateKey;
+    const dateObj = new Date(dateKey);
+    const opts = { weekday: 'long', month: 'long', day: 'numeric' };
+    selectedDayLabel.textContent = dateObj.toLocaleDateString(undefined, opts);
+
+    // build merged events/workouts list for this day
+    const dateMap = buildDateMap();
+    const items = dateMap[dateKey] || [];
+    renderItemsList(items);
+
+    // show upcoming snippet for next 7 days
+    renderUpcomingWorkouts();
+  }
+
+  function renderItemsList(items) {
+    eventsList.innerHTML = '';
+    if (!selectedDate) {
+      selectedDayInfo.textContent = 'Select a date above to view or add events.';
+      return;
+    }
+    selectedDayInfo.textContent = '';
+
+    if (!items.length) {
+      const li = document.createElement('li'); li.textContent = 'No items for this day.'; li.style.color='var(--text-muted)';
+      eventsList.appendChild(li); return;
+    }
+    items.forEach((it, idx) => {
+      const li = document.createElement('li'); li.style.display='flex'; li.style.justifyContent='space-between'; li.style.alignItems='center'; li.style.padding='8px 0';
+      const left = document.createElement('div');
+      left.style.display='flex'; left.style.flexDirection='column';
+      const title = document.createElement('div'); title.style.fontWeight='700'; title.style.color='var(--text-main)';
+      title.textContent = (it.type === 'workout') ? (it.meta.type || 'Workout') : it.title;
+      const meta = document.createElement('div'); meta.style.color='var(--text-muted)'; meta.style.fontSize='13px';
+      if (it.type === 'workout') {
+        const m = it.meta;
+        meta.textContent = (m.startTime ? m.startTime + ' • ' : '') + (m.duration ? (m.duration + 'm • ') : '') + (m.intensity ? (m.intensity) : '');
+        if (m.notes) {
+          const notes = document.createElement('div'); notes.style.color='var(--text-muted)'; notes.style.fontSize='13px'; notes.textContent = m.notes; left.appendChild(notes);
+        }
+      } else {
+        meta.textContent = it.title;
+      }
+      left.appendChild(title); left.appendChild(meta);
+
+      li.appendChild(left);
+
+      // actions: remove workout/event button
+      const right = document.createElement('div'); right.style.display='flex'; right.style.gap='8px';
+      const removeBtn = document.createElement('button'); removeBtn.className='btn btn-ghost'; removeBtn.textContent='Remove';
+      removeBtn.addEventListener('click', ()=> {
+        if (it.type === 'workout') removeWorkoutById(it.meta.id);
+        else removeCalendarEvent(dateKey, it.title);
+      });
+      right.appendChild(removeBtn);
+
+      li.appendChild(right);
+      eventsList.appendChild(li);
+    });
+  }
+
+  function renderUpcomingWorkouts() {
+    // list next 7 calendar days that have workouts
+    const workouts = loadWorkouts().slice().sort((a,b)=> a.date.localeCompare(b.date));
+    const upcoming = [];
+    const start = new Date(selectedDate || (today.getFullYear()+'-01-01'));
+    for (let i=0;i<14;i++){
+      const d = new Date(viewDate.getFullYear(), viewDate.getMonth(), (new Date()).getDate() + i);
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      workouts.forEach(w=>{
+        if (w.date === key) upcoming.push(w);
+      });
+      if (upcoming.length >= 7) break;
+    }
+
+    // Show upcoming below the eventsList (simple approach: add summary LI at top)
+    // Remove any previous upcoming block
+    const existing = document.querySelector('#upcomingWorkouts');
+    if (existing) existing.remove();
+
+    const block = document.createElement('div'); block.id = 'upcomingWorkouts'; block.style.marginTop='12px';
+    if (!upcoming.length) {
+      // nothing
+    } else {
+      const heading = document.createElement('div'); heading.style.fontWeight='800'; heading.textContent = 'Upcoming workouts';
+      block.appendChild(heading);
+      upcoming.slice(0,7).forEach(u=>{
+        const p = document.createElement('div'); p.style.marginTop='6px';
+        p.textContent = `${u.date} — ${u.type}${u.duration ? ' • ' + u.duration + 'm' : ''}${u.startTime ? ' • ' + u.startTime : ''}`;
+        p.style.color = 'var(--text-muted)';
+        block.appendChild(p);
+      });
+      // insert block after eventsList
+      eventsList.parentNode.insertBefore(block, eventsList.nextSibling);
+    }
+  }
+
+  // remove helpers
+  function removeCalendarEvent(dateKey, title) {
+    const events = loadEvents();
+    if (!events[dateKey]) return;
+    events[dateKey] = (events[dateKey] || []).filter(e => e !== title);
+    if (!events[dateKey].length) delete events[dateKey];
+    saveEvents(events);
+    renderCalendar();
+    selectDate(dateKey);
+  }
+  function removeWorkoutById(id) {
+    let workouts = loadWorkouts();
+    workouts = workouts.filter(w => w.id !== id);
+    localStorage.setItem(KEY_WORKOUTS, JSON.stringify(workouts));
+    renderCalendar();
+    if (selectedDate) selectDate(selectedDate);
+  }
+
+  // event form behavior (keeps old manual calendar events)
+  eventForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!selectedDate) { alert('Choose a date first'); return; }
+    const title = eventTitle.value.trim();
+    if (!title) return;
+    const events = loadEvents();
+    events[selectedDate] = events[selectedDate] || [];
+    events[selectedDate].push(title);
+    saveEvents(events);
+    eventTitle.value = '';
+    renderCalendar();
+    selectDate(selectedDate);
+  });
+
+  // controls
+  prevBtn.addEventListener('click', ()=> { viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1); renderCalendar(); });
+  nextBtn.addEventListener('click', ()=> { viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1); renderCalendar(); });
+  todayBtn.addEventListener('click', ()=> { viewDate = new Date(today.getFullYear(), today.getMonth(), 1); renderCalendar(); });
+
+  clearDayBtn.addEventListener('click', function(){
+    if (!selectedDate) return;
+    if (!confirm('Clear all events and workouts for ' + selectedDate + '?')) return;
+    // clear events
+    const events = loadEvents(); delete events[selectedDate]; saveEvents(events);
+    // clear workouts
+    let workouts = loadWorkouts().filter(w => w.date !== selectedDate);
+    localStorage.setItem(KEY_WORKOUTS, JSON.stringify(workouts));
+    renderCalendar();
+    selectDate(selectedDate);
+  });
+
+  // initial render
+  renderCalendar();
+  yearEl.textContent = new Date().getFullYear();
+
+  // auto-select today
+  const todayKey = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  selectDate(todayKey);
+
+})();
+</script>
+  
 </body>
 </html>
