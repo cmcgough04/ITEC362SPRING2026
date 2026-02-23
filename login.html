@@ -1,59 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fitness Tracker | Login</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fitness Tracker — Log In</title>
+  <!-- Single master stylesheet used by all pages -->
   <link rel="stylesheet" href="styles.css">
 </head>
+<body class="login">
+  <!-- Header (same structure used on other pages) -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Fitness Tracker home">
+        <img src="images/logo.png" alt="Fitness Tracker logo" class="logo-img" style="height:84px;width:auto;display:block;">
+        <span class="brand-name">Fitness Tracker</span>
+      </a>
 
-<body>
-  <div class="background">
-    <div class="container">
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="contact_revamped.html">Contact</a></li>
+          <li><a href="log_workout.html">Log Workout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-
- <header class="site-header" role="banner">
-      <div class="container header-inner">
-        <a class="brand" href="index.html" aria-label="Fitness Tracker home">
-          <span class="brand-logo" role="img" aria-label="Fitness Tracker logo"></span>
-          <span class="brand-name">Fitness Tracker</span>
-        </a>
-
-        <nav class="main-nav" role="navigation" aria-label="Main navigation">
-          <ul>
-            <li><a href="index.html">Home Page</a></li>
-            <li><a href="index.html#about">About Us</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
-          </ul>
-        </nav>
-      </div>
+  <main class="container" id="main" role="main">
+    <!-- Page header -->
+    <header class="page-head" style="padding:28px 0;">
+      <h1>Welcome back</h1>
+      <p class="lead">Sign in to access your workouts, insights, and goals.</p>
     </header>
 
-      <h1 class="page-title">Login</h1>
-      <p class="page-subtitle">Login with your Email and Password Below:</p>
+    <!-- Form panel -->
+    <section class="panel" aria-labelledby="signin-heading">
+      <!-- Form container -->
+      <div style="max-width:520px;margin:0 auto;">
+        <h2 id="signin-heading" style="margin:0 0 14px;">Log in to your account</h2>
 
-      <div class="form-box">
-        <h2>Login</h2>
+        <!-- Login form (for demo it posts to #) -->
+        <form id="loginForm" class="auth-form" action="#" method="post" autocomplete="on" novalidate>
+          <!-- Email -->
+          <div class="form-row">
+            <label for="loginEmail">Email address</label>
+            <input id="loginEmail" name="email" type="email" required placeholder="you@example.com" autocomplete="email">
+          </div>
 
-        <form action="#" method="POST">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          <!-- Password -->
+          <div class="form-row">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" name="password" type="password" required minlength="8" placeholder="••••••••" autocomplete="current-password">
+          </div>
 
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          <!-- Remember + forgot -->
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;">
+            <label style="display:inline-flex;align-items:center;gap:8px;font-weight:600;">
+              <input type="checkbox" name="remember" aria-label="Remember me"> Remember me
+            </label>
+            <a href="signup.html" style="color:var(--accent-1);font-weight:700;text-decoration:underline;">Create an account</a>
+          </div>
 
-          <button type="submit">Login</button>
+          <!-- Actions -->
+          <div class="form-actions" style="margin-top:18px;">
+            <button type="submit" class="btn btn-primary">Sign In</button>
+            <button type="button" id="loginDemo" class="btn btn-ghost">Demo</button>
+          </div>
+
+          <!-- Inline status -->
+          <div id="loginStatus" class="form-status" aria-live="polite" style="margin-top:12px;"></div>
         </form>
       </div>
+    </section>
+  </main>
 
-      <div class="heartbeat"></div>
-
-      <footer>
-        © Fitness Tracker <span>2026</span>
-      </footer>
-
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year-login"></span> Fitness Tracker</p>
+      <p class="small-note"><a href="contact_revamped.html">Contact</a> · <a href="index.html">Home</a></p>
     </div>
-  </div>
+  </footer>
+
+  <script>
+    // update year
+    document.getElementById('year-login').textContent = new Date().getFullYear();
+
+    // Demo: simple client-side form handler (replace with real auth in production)
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const status = document.getElementById('loginStatus');
+      if(!email){
+        status.textContent = 'Please enter your email.';
+        status.className = 'form-status error';
+        return;
+      }
+      status.textContent = 'Signed in (demo).';
+      status.className = 'form-status ok';
+      // in production: send to server / handle token
+    });
+
+    // Demo quick-fill
+    document.getElementById('loginDemo').addEventListener('click', function(){
+      document.getElementById('loginEmail').value = 'demo@fitnesstracker.com';
+      document.getElementById('loginPassword').value = 'password123';
+      document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+    });
+  </script>
 </body>
 </html>
