@@ -96,6 +96,11 @@ img.logo-img,
   border-radius: 8px; /* optional, matches .brand-logo */
   display: inline-block; /* keep consistent */
 }
+.main-logo{
+   height:84px;
+   width:auto;
+   display:block;
+}
 .brand-name{font-weight:800;letter-spacing:0.6px;font-size:18px;color:var(--text-main)}
 
 /* Main nav */
