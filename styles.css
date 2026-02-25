@@ -89,6 +89,13 @@ body{
   box-shadow:0 8px 30px rgba(0,0,0,0.6);
   display:inline-block;
 }
+/* make <img class="logo-img"> match the .brand-logo shadow */
+img.logo-img,
+.brand-logo img {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  border-radius: 8px; /* optional, matches .brand-logo */
+  display: inline-block; /* keep consistent */
+}
 .brand-name{font-weight:800;letter-spacing:0.6px;font-size:18px;color:var(--text-main)}
 
 /* Main nav */
