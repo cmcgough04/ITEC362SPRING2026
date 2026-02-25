@@ -47,7 +47,7 @@ body{
 }
 
 /* Generic container */
-.container{width:100%;max-width:var(--container-max);margin:0 auto}
+.container{width:92%;max-width:var(--container-max);margin:0 auto}
 
 /* Accessibility helper */
 .sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
@@ -75,7 +75,7 @@ body{
   gap:12px;
   text-decoration:none;
   color:inherit;
-  flex:0 0 auto !important;
+  flex:0 0 auto;
 }
 .brand-logo{
   width:92px;
