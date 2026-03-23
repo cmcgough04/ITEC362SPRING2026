@@ -524,3 +524,89 @@ header, .site-header { z-index: 50 !important; }
     display: block;
   }
 }
+/* ===========================================
+   MOBILE HAMBURGER MENU (OVERRIDE FIX)
+   Paste at VERY BOTTOM of your CSS
+   =========================================== */
+
+/* Hide hamburger on desktop */
+.nav-toggle {
+  display: none;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+/* MOBILE ONLY */
+@media (max-width: 900px) {
+
+  /* Show hamburger */
+  .nav-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+  }
+
+  /* FORCE NAV TO BE HIDDEN INITIALLY */
+  .main-nav {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 80vw !important;
+    max-width: 320px !important;
+    height: 100vh !important;
+
+    background: rgba(10, 15, 25, 0.98) !important;
+    backdrop-filter: blur(10px);
+
+    padding: 80px 20px 20px !important;
+
+    transform: translateX(100%) !important;
+    transition: transform 0.3s ease !important;
+
+    z-index: 1500 !important;
+    overflow-y: auto !important;
+
+    display: block !important;
+  }
+
+  /* WHEN OPEN */
+  .main-nav.is-open {
+    transform: translateX(0) !important;
+  }
+
+  /* FORCE VERTICAL MENU */
+  .main-nav ul {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+  }
+
+  .main-nav a {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    padding: 12px 14px !important;
+    font-size: 16px !important;
+  }
+
+  /* DARK OVERLAY BACKDROP */
+  .nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1400;
+  }
+
+  .nav-backdrop.is-open {
+    display: block;
+  }
+}
