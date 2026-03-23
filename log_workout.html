@@ -199,4 +199,39 @@
     })();
   </script>
 </body>
+
+  <script>
+  // your existing JS (DO NOT change this)
+</script>
+
+<script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('site-nav');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'nav-backdrop';
+  document.body.appendChild(backdrop);
+
+  function closeNav() {
+    nav.classList.remove('is-open');
+    backdrop.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function openNav() {
+    nav.classList.add('is-open');
+    backdrop.classList.add('is-open');
+    navToggle.setAttribute('aria-expanded', 'true');
+  }
+
+  navToggle.addEventListener('click', function () {
+    nav.classList.contains('is-open') ? closeNav() : openNav();
+  });
+
+  backdrop.addEventListener('click', closeNav);
+
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeNav);
+  });
+</script>
 </html>
