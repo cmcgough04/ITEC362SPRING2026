@@ -188,5 +188,57 @@
     })();
   </script>
 </body>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.getElementById('site-nav');
+
+    if (!navToggle || !nav) return;
+
+    const mq = window.matchMedia('(max-width: 899px)');
+    const backdrop = document.createElement('div');
+    backdrop.className = 'nav-backdrop';
+    document.body.appendChild(backdrop);
+
+    function openNav() {
+      nav.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      navToggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeNav() {
+      nav.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function syncOnResize() {
+      if (mq.matches) {
+        closeNav();
+      } else {
+        closeNav();
+      }
+    }
+
+    navToggle.addEventListener('click', function () {
+      if (nav.classList.contains('is-open')) {
+        closeNav();
+      } else {
+        openNav();
+      }
+    });
+
+    backdrop.addEventListener('click', closeNav);
+
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (mq.matches) closeNav();
+      });
+    });
+
+    mq.addEventListener('change', syncOnResize);
+    syncOnResize();
+  });
+</script>
 </html>
 
