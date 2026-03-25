@@ -134,13 +134,14 @@
       const form = document.getElementById('logForm');
       const status = document.getElementById('formStatus');
       const saveBtn = document.getElementById('saveDraft');
+      const navToggle = document.querySelector('.nav-toggle');
+      const nav = document.getElementById('site-nav');
 
       function show(msg, ok = true) {
         status.textContent = msg;
         status.className = 'form-status ' + (ok ? 'ok' : 'error');
       }
 
-      // Draft restore
       const draft = JSON.parse(localStorage.getItem('ft_log_draft') || 'null');
       if (draft) {
         ['workoutType', 'duration', 'intensity', 'notes', 'startTime', 'date'].forEach((k) => {
@@ -149,7 +150,6 @@
         });
       }
 
-      // Save draft
       saveBtn.addEventListener('click', function () {
         const data = {
           workoutType: document.getElementById('workoutType').value,
@@ -165,7 +165,6 @@
         show('Draft saved locally.');
       });
 
-      // Submit workout
       form.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -197,10 +196,6 @@
         form.reset();
         show('Workout saved locally. Great job!', true);
       });
-
-      // Mobile nav
-      const navToggle = document.querySelector('.nav-toggle');
-      const nav = document.getElementById('site-nav');
 
       if (navToggle && nav) {
         const backdrop = document.createElement('div');
