@@ -1,6 +1,6 @@
 /* ===========================
-   styles.css — cleaned, responsive, same visual style
-   Replace the entire file with this version.
+   styles.css — full clean replacement
+   Mobile-first, same visual style, functional nav
    =========================== */
 
 /* ---------------------------
@@ -37,7 +37,7 @@
 }
 
 /* ---------------------------
-   RESET & BASE
+   RESET / BASE
    --------------------------- */
 *,
 *::before,
@@ -101,6 +101,38 @@ textarea {
   white-space: nowrap;
 }
 
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  color: #172033;
+  box-shadow: var(--shadow-card);
+  border: 1px solid #d9e2f0;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 2px;
+}
+
+/* ---------------------------
+   PAGE WRAPPER
+   --------------------------- */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ---------------------------
    HEADER / NAV
    --------------------------- */
@@ -108,6 +140,9 @@ textarea {
   position: relative;
   z-index: 40;
   padding: 18px 0;
+  border-bottom: 1px solid rgba(217, 226, 240, 0.08);
+  background: rgba(245, 247, 251, 0.02);
+  backdrop-filter: blur(10px);
 }
 
 .header-inner {
@@ -169,6 +204,7 @@ textarea {
   font-weight: 600;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   line-height: 1;
   min-height: 44px;
 }
@@ -197,28 +233,63 @@ textarea {
   z-index: 3002;
 }
 
-/* Backdrop for mobile drawer */
 .nav-backdrop {
   display: none;
 }
 
 /* ---------------------------
-   GLOBAL UI: panels, cards, buttons
+   MAIN / TYPOGRAPHY
    --------------------------- */
+.main {
+  flex: 1;
+  padding: 1rem 0 2rem;
+}
+
+.page-head {
+  margin: 1rem 0 1.25rem;
+}
+
+.page-head h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.9rem, 6vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.lead {
+  margin: 0;
+  max-width: 65ch;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 0;
+  color: var(--text-main);
+  line-height: 1.15;
+}
+
+/* ---------------------------
+   PANELS / CARDS / BUTTONS
+   --------------------------- */
+.panel,
+.card {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-card);
+}
+
 .panel {
   margin: 12px auto;
   padding: 18px;
-  border-radius: var(--card-radius);
-  background: linear-gradient(180deg, var(--surface), var(--surface-2));
-  border: 1px solid var(--surface-border);
-  box-shadow: var(--shadow-card);
 }
 
 .card {
   padding: 18px;
-  border-radius: var(--card-radius);
-  background: linear-gradient(180deg, var(--surface), var(--surface-2));
-  border: 1px solid var(--surface-border);
 }
 
 .card-title {
@@ -246,27 +317,24 @@ textarea {
   box-shadow: 0 14px 40px rgba(255, 120, 120, 0.12);
 }
 
+.btn-primary:hover {
+  filter: brightness(0.98);
+  text-decoration: none;
+}
+
 .btn-ghost {
   background: transparent;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-h1,
-h2,
-h3 {
-  font-weight: 800;
-  color: var(--text-main);
-}
-
-.lead {
-  color: var(--text-muted);
-  max-width: 700px;
-  margin-bottom: 12px;
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.03);
+  text-decoration: none;
 }
 
 /* ---------------------------
-   HOMEPAGE
+   HOMEPAGE HELPERS
    --------------------------- */
 .hero-wrap {
   padding: 28px 0 40px;
@@ -370,6 +438,7 @@ textarea,
 input[type="number"],
 input[type="time"],
 input[type="date"] {
+  width: 100%;
   background: rgba(0, 0, 0, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.04);
   color: #eaf6ff;
@@ -613,13 +682,13 @@ body.log .log-form {
     transition: transform 0.25s ease;
     z-index: 1500;
     overflow-y: auto;
-    pointer-events: none;
+    visibility: hidden;
     margin-left: 0;
   }
 
   .main-nav.is-open {
     transform: translateX(0);
-    pointer-events: auto;
+    visibility: visible;
   }
 
   .main-nav ul {
@@ -637,16 +706,12 @@ body.log .log-form {
     font-size: 16px;
   }
 
-  .nav-backdrop {
-    display: none;
+  .nav-backdrop.is-open {
+    display: block;
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
     z-index: 1400;
-  }
-
-  .nav-backdrop.is-open {
-    display: block;
   }
 
   .grid {
@@ -708,7 +773,7 @@ body.log .log-form {
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 901px) {
   .nav-toggle {
     display: none !important;
   }
@@ -716,7 +781,7 @@ body.log .log-form {
   .main-nav {
     position: static;
     transform: none;
-    transition: none;
+    visibility: visible;
     width: auto;
     height: auto;
     padding: 0;
@@ -724,10 +789,11 @@ body.log .log-form {
     border: 0;
     box-shadow: none;
     overflow: visible;
-    pointer-events: auto;
+    margin-left: 16px;
   }
 
   .main-nav ul {
+    display: flex;
     flex-direction: row;
     gap: 14px;
     align-items: center;
