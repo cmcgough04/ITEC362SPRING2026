@@ -1,60 +1,47 @@
 <!doctype html>
-<!--
-  log_workout.html
-  "Log Workout" page for Fitness Tracker
-  - Semantic HTML5 structure
-  - External CSS in styles_log.css
-  - Navigation links to homepage (index.html) and contact (contact_revamped.html)
-  - Accessible form controls with labels and ARIA where appropriate
--->
 <html lang="en">
 <head>
-  <!-- Conner McGough -->
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fitness Tracker — Log Workout</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="log">
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <div class="page">
-
-    
-    <!-- Header / navigation -->
     <header class="site-header" role="banner">
-  <div class="container header-inner">
-    <a class="brand" href="index.html" aria-label="Fitness Tracker home">
-      <img class="main-logo" src="images/logo.png" alt="Fitness Tracker logo">
-      <span class="brand-name">Fitness Tracker</span>
-    </a>
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Fitness Tracker home">
+          <img class="main-logo" src="images/logo.png" alt="Fitness Tracker logo">
+          <span class="brand-name">Fitness Tracker</span>
+        </a>
 
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-      ☰ Menu
-    </button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          ☰ Menu
+        </button>
 
-    <nav id="site-nav" class="main-nav" role="navigation" aria-label="Main navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="log_workout.html">Log Workout</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="signup.html">Get Started</a></li>
-        <li><a href="login.html">Login</a></li>
-      </ul>
-    </nav>
-  </div>
+        <nav id="site-nav" class="main-nav" role="navigation" aria-label="Main navigation">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="contact_revamped.html">Contact</a></li>
+            <li><a href="log_workout.html" aria-current="page">Log Workout</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="signup.html">Get Started</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <!-- Main content -->
     <main class="container main" id="main" role="main">
       <header class="page-head">
         <h1>Log Workout</h1>
         <p class="lead">Quickly record workouts so you can track progress over time.</p>
       </header>
 
-      <!-- Form panel -->
       <section class="panel">
         <form id="logForm" class="log-form" autocomplete="on" novalidate>
-          <!-- top row: workout type + duration -->
           <div class="row">
             <div class="field">
               <label for="workoutType">Workout type</label>
@@ -72,11 +59,18 @@
 
             <div class="field">
               <label for="duration">Duration (minutes)</label>
-              <input id="duration" name="duration" type="number" min="1" inputmode="numeric" placeholder="e.g. 45" required>
+              <input
+                id="duration"
+                name="duration"
+                type="number"
+                min="1"
+                inputmode="numeric"
+                placeholder="e.g. 45"
+                required
+              >
             </div>
           </div>
 
-          <!-- single row: intensity -->
           <div class="row">
             <div class="field full">
               <label for="intensity">Intensity</label>
@@ -90,15 +84,18 @@
             </div>
           </div>
 
-          <!-- notes -->
           <div class="row">
             <div class="field full">
               <label for="notes">Notes</label>
-              <textarea id="notes" name="notes" rows="6" placeholder="Anything to remember about this workout..."></textarea>
+              <textarea
+                id="notes"
+                name="notes"
+                rows="6"
+                placeholder="Anything to remember about this workout..."
+              ></textarea>
             </div>
           </div>
 
-          <!-- bottom row: start time + date -->
           <div class="row">
             <div class="field">
               <label for="startTime">Start time</label>
@@ -111,7 +108,6 @@
             </div>
           </div>
 
-          <!-- actions -->
           <div class="actions">
             <button type="submit" class="btn btn-primary">Save Workout</button>
             <button type="button" id="saveDraft" class="btn btn-ghost">Save Draft</button>
@@ -121,38 +117,40 @@
       </section>
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer" role="contentinfo">
       <div class="container footer-inner">
         <p>&copy; <span id="year"></span> Fitness Tracker</p>
-        <p class="small-note"><a href="contact_revamped.html">Contact</a> · <a href="index.html">Home</a></p>
+        <p class="small-note">
+          <a href="contact_revamped.html">Contact</a> · <a href="index.html">Home</a>
+        </p>
       </div>
     </footer>
   </div>
 
   <script>
-    // update footer year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-    (function(){
       const form = document.getElementById('logForm');
       const status = document.getElementById('formStatus');
       const saveBtn = document.getElementById('saveDraft');
 
-      function show(msg, ok=true){
+      function show(msg, ok = true) {
         status.textContent = msg;
         status.className = 'form-status ' + (ok ? 'ok' : 'error');
       }
 
-      // load draft if exists
+      // Draft restore
       const draft = JSON.parse(localStorage.getItem('ft_log_draft') || 'null');
-      if(draft){
-        ['workoutType','duration','intensity','notes','startTime','date'].forEach(k=>{
-          if(draft[k] && document.getElementById(k)) document.getElementById(k).value = draft[k];
+      if (draft) {
+        ['workoutType', 'duration', 'intensity', 'notes', 'startTime', 'date'].forEach((k) => {
+          const el = document.getElementById(k);
+          if (draft[k] && el) el.value = draft[k];
         });
       }
 
-      saveBtn.addEventListener('click', function(){
+      // Save draft
+      saveBtn.addEventListener('click', function () {
         const data = {
           workoutType: document.getElementById('workoutType').value,
           duration: document.getElementById('duration').value,
@@ -162,75 +160,80 @@
           date: document.getElementById('date').value,
           savedAt: new Date().toISOString()
         };
+
         localStorage.setItem('ft_log_draft', JSON.stringify(data));
         show('Draft saved locally.');
       });
 
-      form.addEventListener('submit', function(e){
+      // Submit workout
+      form.addEventListener('submit', function (e) {
         e.preventDefault();
+
         const workoutType = document.getElementById('workoutType').value.trim();
         const duration = document.getElementById('duration').value.trim();
         const intensity = document.getElementById('intensity').value.trim();
         const date = document.getElementById('date').value.trim();
 
-        if(!workoutType || !duration || !intensity || !date){
+        if (!workoutType || !duration || !intensity || !date) {
           show('Please complete all required fields.', false);
           return;
         }
 
-        // demo: save to localStorage (replace with API call in production)
         const payload = {
-          workoutType, duration, intensity,
+          workoutType,
+          duration,
+          intensity,
           notes: document.getElementById('notes').value.trim(),
           startTime: document.getElementById('startTime').value.trim(),
           date,
           createdAt: new Date().toISOString()
         };
-        const stored = JSON.parse(localStorage.getItem('ft_workouts')||'[]');
-        stored.unshift(payload);
-        localStorage.setItem('ft_workouts', JSON.stringify(stored.slice(0,200)));
 
-        // cleanup
+        const stored = JSON.parse(localStorage.getItem('ft_workouts') || '[]');
+        stored.unshift(payload);
+        localStorage.setItem('ft_workouts', JSON.stringify(stored.slice(0, 200)));
+
         localStorage.removeItem('ft_log_draft');
         form.reset();
         show('Workout saved locally. Great job!', true);
       });
-    })();
+
+      // Mobile nav
+      const navToggle = document.querySelector('.nav-toggle');
+      const nav = document.getElementById('site-nav');
+
+      if (navToggle && nav) {
+        const backdrop = document.createElement('div');
+        backdrop.className = 'nav-backdrop';
+        document.body.appendChild(backdrop);
+
+        function openNav() {
+          nav.classList.add('is-open');
+          backdrop.classList.add('is-open');
+          navToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeNav() {
+          nav.classList.remove('is-open');
+          backdrop.classList.remove('is-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        navToggle.addEventListener('click', function () {
+          if (nav.classList.contains('is-open')) {
+            closeNav();
+          } else {
+            openNav();
+          }
+        });
+
+        backdrop.addEventListener('click', closeNav);
+
+        nav.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', closeNav);
+        });
+      }
+    });
   </script>
 </body>
-
-  <script>
-  // your existing JS (DO NOT change this)
-</script>
-
-<script>
-  const navToggle = document.querySelector('.nav-toggle');
-  const nav = document.getElementById('site-nav');
-
-  const backdrop = document.createElement('div');
-  backdrop.className = 'nav-backdrop';
-  document.body.appendChild(backdrop);
-
-  function closeNav() {
-    nav.classList.remove('is-open');
-    backdrop.classList.remove('is-open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  }
-
-  function openNav() {
-    nav.classList.add('is-open');
-    backdrop.classList.add('is-open');
-    navToggle.setAttribute('aria-expanded', 'true');
-  }
-
-  navToggle.addEventListener('click', function () {
-    nav.classList.contains('is-open') ? closeNav() : openNav();
-  });
-
-  backdrop.addEventListener('click', closeNav);
-
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeNav);
-  });
-</script>
 </html>
