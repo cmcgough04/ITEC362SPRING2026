@@ -1,181 +1,91 @@
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness Tracker</title>
 
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.5;
-  background: #f7f7f7;
-  color: #222;
-}
+  <style>
+    :root {
+      --bg: #f7f7f7;
+      --card: #ffffff;
+      --text: #222;
+      --accent: #4f46e5;
+    }
 
-/* CONTAINER */
-.container {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 16px;
-}
+    body.dark {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+    }
 
-/* HEADER */
-.site-header {
-  background: white;
-  border-bottom: 1px solid #ddd;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s;
+    }
 
-/* BRAND */
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: #222;
-}
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 16px;
+    }
 
-.main-logo {
-  width: 40px;
-  height: auto;
-}
+    /* HEADER */
+    .site-header {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
 
-.brand-name {
-  font-size: 18px;
-  font-weight: bold;
-}
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-/* NAVIGATION */
-.menu-toggle {
-  font-size: 24px;
-  background: none;
-  border: none;
-  display: block;
-  cursor: pointer;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
 
-.main-nav {
-  width: 100%;
-  display: none;
-}
+    .main-logo {
+      width: 40px;
+    }
 
-.main-nav.open {
-  display: block;
-}
+    .menu-toggle {
+      font-size: 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
 
-.main-nav ul {
-  list-style: none;
-}
+    .main-nav {
+      display: none;
+      width: 100%;
+    }
 
-.main-nav li {
-  margin: 10px 0;
-}
+    .main-nav.open {
+      display: block;
+    }
 
-.main-nav a {
-  display: block;
-  padding: 12px;
-  background: #eee;
-  border-radius: 8px;
-  text-decoration: none;
-  color: #222;
-}
+    .main-nav ul {
+      list-style: none;
+    }
 
-/* HERO */
-.hero-wrap {
-  padding: 20px 0;
-}
-
-.hero-title {
-  font-size: 24px;
-  margin-bottom: 16px;
-}
-
-/* PANELS */
-.panel {
-  background: white;
-  padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 16px;
-}
-
-/* DAYS ROW */
-.days-row {
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-}
-
-.active-day {
-  font-weight: bold;
-}
-
-/* WORKOUT LIST */
-.workout-list p {
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-/* IMAGES */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* =========================
-   TABLET (768px+)
-========================= */
-@media (min-width: 768px) {
-
-  .menu-toggle {
-    display: none;
-  }
-
-  .main-nav {
-    display: block !important;
-    width: auto;
-  }
-
-  .main-nav ul {
-    display: flex;
-    gap: 10px;
-  }
-
-  .main-nav li {
-    margin: 0;
-  }
-
-  .main-nav a {
-    background: none;
-    padding: 8px 12px;
-  }
-
-  .hero-title {
-    font-size: 28px;
-  }
-
-  .workout-list p {
-    font-size: 16px;
-  }
-}
-
-/* =========================
-   DESKTOP (1024px+)
-========================= */
-@media (min-width: 1024px) {
-
-  .hero {
-    max-width: 700px;
-    margin: auto;
-  }
-
-  .hero-title {
-    font-size: 32px;
-  }
-}
+    .main-nav a {
+      display: block;
+      padding: 12px;
+      margin: 6px 0;
