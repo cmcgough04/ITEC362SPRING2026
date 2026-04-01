@@ -3,91 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fitness Tracker</title>
+  <title>Fitness Tracker | Calendar</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
-  <style>
-    :root {
-      --bg: #f7f7f7;
-      --card: #ffffff;
-      --text: #222;
-      --accent: #4f46e5;
-    }
+<body>
 
-    body.dark {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --text: #e2e8f0;
-    }
+<!-- HEADER -->
+<header class="site-header">
+  <div class="container header-inner">
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <a href="index.html" class="brand">
+      <img class="main-logo" src="images/logo.png" alt="logo">
+      <span class="brand-name">Fitness Tracker</span>
+    </a>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: 0.3s;
-    }
+    <button id="menuToggle" class="menu-toggle">☰</button>
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 16px;
-    }
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="log_workout.html">Log Workout</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
 
-    /* HEADER */
-    .site-header {
-      position: sticky;
-      top: 0;
-      background: var(--card);
-      z-index: 1000;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
+  </div>
+</header>
 
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+<!-- MAIN -->
+<main class="container">
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-    }
+  <!-- TITLE -->
+  <h1 class="page-title">Workout Calendar</h1>
 
-    .main-logo {
-      width: 40px;
-    }
+  <!-- CONTROLS -->
+  <div class="calendar-controls panel">
+    <button id="prevMonth">←</button>
+    <div>
+      <span id="monthLabel"></span>
+      <span id="yearLabel"></span>
+    </div>
+    <button id="nextMonth">→</button>
+    <button id="todayBtn">Today</button>
+  </div>
 
-    .menu-toggle {
-      font-size: 24px;
-      border: none;
-      background: none;
-      cursor: pointer;
-    }
+  <!-- CALENDAR GRID -->
+  <div class="calendar-grid panel"></div>
 
-    .main-nav {
-      display: none;
-      width: 100%;
-    }
+  <!-- SELECTED DAY -->
+  <div class="panel">
+    <h2 id="selectedDayLabel">Select a date</h2>
+    <p id="selectedDayInfo"></p>
+    <ul id="eventsList"></ul>
 
-    .main-nav.open {
-      display: block;
-    }
+    <form id="eventForm">
+      <input type="text" id="eventTitle" placeholder="Add event..." required>
+      <button type="submit">Add</button>
+    </form>
 
-    .main-nav ul {
-      list-style: none;
-    }
+    <button id="clearDay">Clear Day</button>
+  </div>
 
-    .main-nav a {
-      display: block;
-      padding: 12px;
-      margin: 6px 0;
+</main>
+
+<!-- NAV TOGGLE -->
+<script>
+document.getElementById("menuToggle").onclick = function () {
+  document.getElementById("mainNav").classList.toggle("open");
+};
+</script>
+
+<!-- ✅ KEEP YOUR ORIGINAL CALENDAR SCRIPT RIGHT HERE -->
+<!-- (DO NOT CHANGE IT) -->
+
+</body>
+</html>
