@@ -1,6 +1,6 @@
 /* ===========================
-   styles.css — full clean replacement
-   Mobile-first, same visual style, functional nav
+   styles.css — clean full replacement
+   Same look, mobile-friendly, functional nav, smooth page flow
    =========================== */
 
 /* ---------------------------
@@ -13,8 +13,6 @@
   --accent-1: #4fd1c5;
   --accent-2: #ff7b7b;
   --accent-grad: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-  --accent: #ff8a3d;
-  --accent-2b: #ffb26b;
 
   --bg-overlay: rgba(4, 10, 20, 0.28);
   --bg-overlay-strong: rgba(4, 6, 12, 0.7);
@@ -46,7 +44,7 @@
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
   overflow-x: hidden;
 }
 
@@ -60,8 +58,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background:
     linear-gradient(var(--bg-overlay), var(--bg-overlay-strong)),
-    var(--brand-background) center / cover fixed no-repeat;
-  padding-bottom: 32px;
+    var(--brand-background) center / cover no-repeat fixed;
+  padding-bottom: 2rem;
   overflow-x: hidden;
 }
 
@@ -125,12 +123,17 @@ textarea {
 }
 
 /* ---------------------------
-   PAGE WRAPPER
+   PAGE WRAPPER / FLOW
    --------------------------- */
 .page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: 1rem 0 2rem;
 }
 
 /* ---------------------------
@@ -233,43 +236,17 @@ textarea {
   z-index: 3002;
 }
 
+/* Backdrop created by JS */
 .nav-backdrop {
   display: none;
 }
 
-/* ---------------------------
-   MAIN / TYPOGRAPHY
-   --------------------------- */
-.main {
-  flex: 1;
-  padding: 1rem 0 2rem;
-}
-
-.page-head {
-  margin: 1rem 0 1.25rem;
-}
-
-.page-head h1 {
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.9rem, 6vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-
-.lead {
-  margin: 0;
-  max-width: 65ch;
-  color: var(--text-muted);
-  font-size: 1rem;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  margin-top: 0;
-  color: var(--text-main);
-  line-height: 1.15;
+.nav-backdrop.is-open {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1400;
 }
 
 /* ---------------------------
@@ -331,6 +308,36 @@ h4 {
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.03);
   text-decoration: none;
+}
+
+/* ---------------------------
+   TYPOGRAPHY
+   --------------------------- */
+.page-head {
+  margin: 1rem 0 1.25rem;
+}
+
+.page-head h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.9rem, 6vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.lead {
+  margin: 0;
+  max-width: 65ch;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 0;
+  color: var(--text-main);
+  line-height: 1.15;
 }
 
 /* ---------------------------
@@ -605,21 +612,27 @@ input[type="number"] {
    FOOTER
    --------------------------- */
 .site-footer {
-  margin: 2rem auto;
-  padding: 18px;
-  max-width: 900px;
-  border-radius: 12px;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 16px 0 2rem;
+  text-align: center;
+  color: rgba(235, 245, 255, 0.7);
+}
 
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.02),
-    rgba(255,255,255,0.01)
-  );
+.site-footer a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
 
-  border: 1px solid rgba(255,255,255,0.03);
-  box-shadow: 0 20px 80px rgba(2,6,23,0.6);
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
 
-  backdrop-filter: blur(6px);
+.small-note {
+  margin: 0;
 }
 
 /* ---------------------------
@@ -647,6 +660,10 @@ body.log .log-form {
 }
 
 @media (max-width: 900px) {
+  body {
+    background-attachment: scroll;
+  }
+
   .site-header {
     padding: 14px 0;
   }
@@ -689,12 +706,14 @@ body.log .log-form {
     z-index: 1500;
     overflow-y: auto;
     visibility: hidden;
+    pointer-events: none;
     margin-left: 0;
   }
 
   .main-nav.is-open {
     transform: translateX(0);
     visibility: visible;
+    pointer-events: auto;
   }
 
   .main-nav ul {
@@ -710,14 +729,6 @@ body.log .log-form {
     justify-content: flex-start;
     padding: 12px 14px;
     font-size: 16px;
-  }
-
-  .nav-backdrop.is-open {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1400;
   }
 
   .grid {
@@ -788,6 +799,7 @@ body.log .log-form {
     position: static;
     transform: none;
     visibility: visible;
+    pointer-events: auto;
     width: auto;
     height: auto;
     padding: 0;
