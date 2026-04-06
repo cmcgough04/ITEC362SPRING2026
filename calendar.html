@@ -5,6 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fitness Tracker | Calendar</title>
   <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .days-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .day-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .day-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .day-btn.active-day {
+      background: rgba(255, 255, 255, 0.15);
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body class="home">
 
@@ -83,7 +113,7 @@
       mon: [
         "Bench Press - 3 sets of 8",
         "Push-ups - 3 sets of 12",
-        "Tricep Dips - 3 sets of 10",
+        "Tricep Extensions - 3 sets of 10",
         "Plank - 3 rounds of 30 seconds"
       ],
       tue: [
@@ -108,13 +138,13 @@
       fri: [
         "Treadmill Run - 20 minutes",
         "Jump Rope - 3 rounds of 2 minutes",
-        "Mountain Climbers - 3 sets of 20",
-        "Burpees - 3 sets of 10"
+        "Burpees - 3 sets of 10",
+        "Mountain Climbers - 3 sets of 20"
       ],
       sat: [
         "Yoga Flow - 20 minutes",
-        "Core Twists - 3 sets of 20",
         "Sit-ups - 3 sets of 15",
+        "Russian Twists - 3 sets of 20",
         "Stretching - 15 minutes"
       ]
     };
@@ -130,6 +160,7 @@
         this.classList.add("active-day");
 
         workoutList.innerHTML = "";
+
         workouts[selectedDay].forEach(workout => {
           const p = document.createElement("p");
           p.textContent = workout;
