@@ -660,16 +660,13 @@ body.log .log-form {
     height: 100vh;
     padding: 5rem 1rem 1rem;
     background: rgba(10, 15, 25, 0.98);
-    backdrop-filter: blur(10px);
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: var(--shadow-strong);
     transform: translateX(100%);
     transition: transform 0.25s ease;
     z-index: 1500;
-    overflow-y: auto;
+
+     
     visibility: hidden;
     pointer-events: none;
-    margin-left: 0;
   }
 
   .main-nav.is-open {
@@ -792,9 +789,6 @@ body.log .log-form {
     grid-template-columns: 1fr 320px;
   }
 }
-.nav-toggle-checkbox {
-  display: none;
-}
 
 .nav-toggle {
   display: none;
@@ -849,9 +843,6 @@ body.log .log-form {
     overflow-y: auto;
   }
 
-  .nav-toggle-checkbox:checked ~ .main-nav {
-    transform: translateX(0);
-  }
 
   .main-nav ul {
     display: flex;
