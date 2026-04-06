@@ -1,11 +1,8 @@
 /* ===========================
-   styles.css — clean full replacement
+   styles.css — full clean replacement
    Same look, mobile-friendly, functional nav, smooth page flow
    =========================== */
 
-/* ---------------------------
-   THEME / VARIABLES
-   --------------------------- */
 :root {
   --brand-logo: url("images/logo.png");
   --brand-background: url("images/background.png");
@@ -34,9 +31,6 @@
   --shadow-strong: 0 12px 40px rgba(2, 6, 23, 0.55);
 }
 
-/* ---------------------------
-   RESET / BASE
-   --------------------------- */
 *,
 *::before,
 *::after {
@@ -122,9 +116,6 @@ textarea {
   outline-offset: 2px;
 }
 
-/* ---------------------------
-   PAGE WRAPPER / FLOW
-   --------------------------- */
 .page {
   min-height: 100vh;
   display: flex;
@@ -136,9 +127,6 @@ textarea {
   padding: 1rem 0 2rem;
 }
 
-/* ---------------------------
-   HEADER / NAV
-   --------------------------- */
 .site-header {
   position: relative;
   z-index: 40;
@@ -222,7 +210,6 @@ textarea {
   background: rgba(255, 255, 255, 0.04);
 }
 
-/* Hamburger button */
 .nav-toggle {
   display: none;
   min-height: 44px;
@@ -236,7 +223,6 @@ textarea {
   z-index: 3002;
 }
 
-/* Backdrop created by JS */
 .nav-backdrop {
   display: none;
 }
@@ -249,9 +235,6 @@ textarea {
   z-index: 1400;
 }
 
-/* ---------------------------
-   PANELS / CARDS / BUTTONS
-   --------------------------- */
 .panel,
 .card {
   background: var(--surface);
@@ -310,9 +293,6 @@ textarea {
   text-decoration: none;
 }
 
-/* ---------------------------
-   TYPOGRAPHY
-   --------------------------- */
 .page-head {
   margin: 1rem 0 1.25rem;
 }
@@ -340,9 +320,6 @@ h4 {
   line-height: 1.15;
 }
 
-/* ---------------------------
-   HOMEPAGE HELPERS
-   --------------------------- */
 .hero-wrap {
   padding: 28px 0 40px;
 }
@@ -416,9 +393,6 @@ h4 {
   box-shadow: var(--shadow-soft);
 }
 
-/* ---------------------------
-   CONTACT PAGE
-   --------------------------- */
 .grid {
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -531,9 +505,6 @@ textarea {
   color: var(--accent-1) !important;
 }
 
-/* ---------------------------
-   LOG WORKOUT PAGE
-   --------------------------- */
 .log-form {
   max-width: 760px;
   margin: 0 auto;
@@ -608,9 +579,6 @@ input[type="number"] {
   color: #ff9a8a;
 }
 
-/* ---------------------------
-   FOOTER
-   --------------------------- */
 .site-footer {
   margin-top: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.03);
@@ -635,9 +603,6 @@ input[type="number"] {
   margin: 0;
 }
 
-/* ---------------------------
-   PAGE-SPECIFIC TWEAKS
-   --------------------------- */
 body.home .hero {
   margin-top: 8px;
 }
@@ -650,9 +615,6 @@ body.log .log-form {
   max-width: 820px;
 }
 
-/* ---------------------------
-   RESPONSIVE
-   --------------------------- */
 @media (max-width: 1100px) {
   .hero {
     padding: 22px;
