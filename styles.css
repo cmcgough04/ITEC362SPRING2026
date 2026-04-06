@@ -652,7 +652,7 @@ body.log .log-form {
     margin-left: auto;
   }
 
-  .main-nav {
+.main-nav {
     position: fixed;
     top: 0;
     right: 0;
@@ -669,13 +669,13 @@ body.log .log-form {
     pointer-events: none;
   }
 
-  .main-nav.is-open {
+.main-nav.is-open {
     transform: translateX(0);
     visibility: visible;
     pointer-events: auto;
   }
 
-  .main-nav ul {
+.main-nav ul {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -683,46 +683,46 @@ body.log .log-form {
     width: 100%;
   }
 
-  .main-nav a {
+.main-nav a {
     width: 100%;
     justify-content: flex-start;
     padding: 12px 14px;
     font-size: 16px;
   }
 
-  .grid {
+.grid {
     grid-template-columns: 1fr;
   }
 
-  .page-head {
+.page-head {
     text-align: center;
   }
 
-  .hero-title {
+.hero-title {
     font-size: 28px;
   }
 
-  .hero-ctas {
+.hero-ctas {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .btn {
+.btn {
     width: 100%;
   }
 
-  .row {
+.row {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .actions,
-  .form-actions {
+.actions,
+.form-actions {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .form-status {
+.form-status {
     margin-left: 0;
   }
 }
@@ -801,94 +801,4 @@ body.log .log-form {
   font-weight: 700;
   cursor: pointer;
   z-index: 3002;
-}
-
-@media (max-width: 900px) {
-  .header-inner {
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .brand-name {
-    display: none;
-  }
-
-  .main-logo,
-  .logo-img {
-    width: 72px;
-    height: 72px;
-  }
-
-  .nav-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-  }
-
-  .main-nav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: min(82vw, 320px);
-    height: 100vh;
-    padding: 5rem 1rem 1rem;
-    background: rgba(10, 15, 25, 0.98);
-    backdrop-filter: blur(10px);
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 12px 40px rgba(2, 6, 23, 0.55);
-    transform: translateX(100%);
-    transition: transform 0.25s ease;
-    z-index: 1500;
-    overflow-y: auto;
-  }
-
-
-  .main-nav ul {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .main-nav a {
-    width: 100%;
-    min-height: 44px;
-    justify-content: flex-start;
-    padding: 12px 14px;
-  }
-}
-
-@media (min-width: 901px) {
-  .nav-toggle {
-    display: none !important;
-  }
-
-  .main-nav {
-    position: static;
-    transform: none;
-    width: auto;
-    height: auto;
-    padding: 0;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    overflow: visible;
-  }
-
-  .main-nav ul {
-    display: flex;
-    flex-direction: row;
-    gap: 14px;
-    align-items: center;
-  }
-
-  .main-nav a {
-    width: auto;
-    justify-content: center;
-  }
 }
