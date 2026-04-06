@@ -789,16 +789,3 @@ body.log .log-form {
     grid-template-columns: 1fr 320px;
   }
 }
-
-.nav-toggle {
-  display: none;
-  min-height: 44px;
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-  z-index: 3002;
-}
