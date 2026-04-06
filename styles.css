@@ -652,7 +652,7 @@ body.log .log-form {
     margin-left: auto;
   }
 
-.main-nav {
+   .main-nav {
     position: fixed;
     top: 0;
     right: 0;
@@ -669,13 +669,13 @@ body.log .log-form {
     pointer-events: none;
   }
 
-.main-nav.is-open {
+   .main-nav.is-open {
     transform: translateX(0);
     visibility: visible;
     pointer-events: auto;
   }
 
-.main-nav ul {
+   .main-nav ul {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -683,46 +683,46 @@ body.log .log-form {
     width: 100%;
   }
 
-.main-nav a {
+   .main-nav a {
     width: 100%;
     justify-content: flex-start;
     padding: 12px 14px;
     font-size: 16px;
   }
 
-.grid {
+   .grid {
     grid-template-columns: 1fr;
   }
 
-.page-head {
+   .page-head {
     text-align: center;
   }
 
-.hero-title {
+   .hero-title {
     font-size: 28px;
   }
 
-.hero-ctas {
+   .hero-ctas {
     flex-direction: column;
     align-items: stretch;
   }
 
-.btn {
+   .btn {
     width: 100%;
   }
 
-.row {
+   .row {
     flex-direction: column;
     align-items: stretch;
   }
 
-.actions,
-.form-actions {
+   .actions,
+   .form-actions {
     flex-direction: column;
     align-items: stretch;
   }
 
-.form-status {
+   .form-status {
     margin-left: 0;
   }
 }
