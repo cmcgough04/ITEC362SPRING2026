@@ -35,33 +35,29 @@
       font-weight: bold;
     }
 
+    /* 🔥 STRONG INSTAGRAM BUTTON STYLE (overrides everything) */
     .instagram-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #E1306C;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 28px;
-  color: white;
-  z-index: 9999;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease;
-}
-
-.instagram-btn:hover {
-  transform: scale(1.1);
-}
-
-    
+      position: fixed !important;
+      bottom: 20px !important;
+      right: 20px !important;
+      width: 60px !important;
+      height: 60px !important;
+      background: #E1306C !important;
+      color: #ffffff !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-decoration: none !important;
+      font-size: 30px !important;
+      font-weight: bold !important;
+      z-index: 99999 !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+      border: 2px solid white !important;
+    }
   </style>
 </head>
-  
+
 <body class="home">
 
   <header class="site-header">
@@ -116,6 +112,17 @@
           <p>Tricep Dips - 3 sets of 10</p>
           <p>Bent Over Rows - 3 sets of 12</p>
         </div>
+
+        <!-- ✅ GUARANTEED VISIBLE INSTAGRAM BUTTON -->
+        <div style="margin-top: 20px; text-align: center;">
+          <a href="https://www.instagram.com" target="_blank"
+             class="instagram-btn"
+             aria-label="Instagram"
+             style="position: static !important; margin: 0 auto;">
+            IG
+          </a>
+        </div>
+
       </div>
     </section>
   </main>
@@ -195,6 +202,6 @@
       });
     });
   </script>
-  <a href="https://www.instagram.com" target="_blank" class="instagram-btn" aria-label="Instagram">📸</a>
+
 </body>
 </html>
