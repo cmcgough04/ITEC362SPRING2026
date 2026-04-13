@@ -35,7 +35,7 @@
       font-weight: bold;
     }
 
-    /* 🔥 STRONG INSTAGRAM BUTTON STYLE (overrides everything) */
+    /* 🔥 STRONG INSTAGRAM BUTTON STYLE */
     .instagram-btn {
       position: fixed !important;
       bottom: 20px !important;
@@ -54,6 +54,23 @@
       z-index: 99999 !important;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
       border: 2px solid white !important;
+    }
+
+    /* 💬 NEW MESSAGE BUBBLE */
+    .instagram-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .instagram-text {
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -113,14 +130,22 @@
           <p>Bent Over Rows - 3 sets of 12</p>
         </div>
 
-        <!-- ✅ GUARANTEED VISIBLE INSTAGRAM BUTTON -->
+        <!-- 💬 INSTAGRAM BUBBLE + BUTTON -->
         <div style="margin-top: 20px; text-align: center;">
-          <a href="https://www.instagram.com" target="_blank"
-             class="instagram-btn"
-             aria-label="Instagram"
-             style="position: static !important; margin: 0 auto;">
-            IG
-          </a>
+          <div class="instagram-wrapper">
+
+            <div class="instagram-text">
+              Share your workouts with us!
+            </div>
+
+            <a href="https://www.instagram.com" target="_blank"
+               class="instagram-btn"
+               aria-label="Instagram"
+               style="position: static !important; margin: 0 auto;">
+              IG
+            </a>
+
+          </div>
         </div>
 
       </div>
