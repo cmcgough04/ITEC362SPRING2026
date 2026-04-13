@@ -34,8 +34,38 @@
       background: rgba(255, 255, 255, 0.15);
       font-weight: bold;
     }
+
+    .instagram-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #E1306C;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.instagram-btn:hover {
+  transform: scale(1.1);
+}
+
+.instagram-btn img {
+  width: 28px;
+  height: 28px;
+}
+    
   </style>
 </head>
+
+<a href="https://www.instagram.com" target="_blank" class="instagram-btn" aria-label="Instagram">
+  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram logo">
+</a>
+  
 <body class="home">
 
   <header class="site-header">
