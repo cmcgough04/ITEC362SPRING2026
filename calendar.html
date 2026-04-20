@@ -9,31 +9,29 @@
 
 <body class="home">
 
-  <header class="site-header">
-   <div class="page">
-     <header class="site-header" role="banner">
-      <div class="container header-inner">
-        <a class="brand" href="index.html" aria-label="Fitness Tracker home">
-          <img class="main-logo" src="images/logo.png" alt="Fitness Tracker logo">
-          <span class="brand-name">Fitness Tracker</span>
-        </a>
-  
-        <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox" hidden>
-        <label for="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
-          ☰ Menu
-        </label>
-  
-          <nav id="site-nav" class="main-nav" role="navigation" aria-label="Main navigation">
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="log_workout.html">Log Workout</a></li>
-              <li><a href="calendar.html">Calendar</a></li>
-              <li><a href="signup.html">Get Started</a></li>
-              <li><a href="login.html">Login</a></li>
-            </ul>
-          </nav>
-        </div>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Fitness Tracker home">
+        <img class="main-logo" src="images/logo.png" alt="Fitness Tracker logo">
+        <span class="brand-name">Fitness Tracker</span>
+      </a>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox" hidden>
+      <label for="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+        ☰ Menu
+      </label>
+
+      <nav id="site-nav" class="main-nav" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="log_workout.html">Log Workout</a></li>
+          <li><a href="calendar.html">Calendar</a></li>
+          <li><a href="signup.html">Get Started</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main>
@@ -42,13 +40,13 @@
         <h1 class="hero-title">Your Workout Today</h1>
 
         <div class="panel days-row" aria-label="Workout days">
-          <button class="day-btn" data-day="sun">S</button>
-          <button class="day-btn" data-day="mon">M</button>
-          <button class="day-btn" data-day="tue">T</button>
-          <button class="day-btn active-day" data-day="wed">W</button>
-          <button class="day-btn" data-day="thu">T</button>
-          <button class="day-btn" data-day="fri">F</button>
-          <button class="day-btn" data-day="sat">S</button>
+          <button class="day-btn" data-day="sun" type="button">S</button>
+          <button class="day-btn" data-day="mon" type="button">M</button>
+          <button class="day-btn" data-day="tue" type="button">T</button>
+          <button class="day-btn active-day" data-day="wed" type="button">W</button>
+          <button class="day-btn" data-day="thu" type="button">T</button>
+          <button class="day-btn" data-day="fri" type="button">F</button>
+          <button class="day-btn" data-day="sat" type="button">S</button>
         </div>
 
         <div class="panel workout-list" id="workoutList">
@@ -61,19 +59,17 @@
 
         <div style="margin-top: 20px; text-align: center;">
           <div class="instagram-wrapper">
-
             <div class="instagram-text">
               Share your workouts with us!
             </div>
 
-            <a href="https://www.instagram.com" target="_blank"
+            <a href="https://www.instagram.com"
+               target="_blank"
                class="instagram-btn"
                aria-label="Instagram"
                style="position: static !important; margin: 0 auto;">
-              IG 
-
+              IG
             </a>
-
           </div>
         </div>
 
@@ -81,18 +77,7 @@
     </section>
   </main>
 
-  
-     
   <script>
-    const menuToggle = document.getElementById("menuToggle");
-    const mainNav = document.getElementById("mainNav");
-
-    menuToggle.addEventListener("click", function () {
-      mainNav.classList.toggle("open");
-      const expanded = mainNav.classList.contains("open");
-      menuToggle.setAttribute("aria-expanded", expanded);
-    });
-
     const workouts = {
       sun: [
         "Rest Day - Light stretching",
@@ -141,6 +126,16 @@
     const dayButtons = document.querySelectorAll(".day-btn");
     const workoutList = document.getElementById("workoutList");
 
+    function showWorkout(day) {
+      workoutList.innerHTML = "";
+
+      workouts[day].forEach(workout => {
+        const p = document.createElement("p");
+        p.textContent = workout;
+        workoutList.appendChild(p);
+      });
+    }
+
     dayButtons.forEach(button => {
       button.addEventListener("click", function () {
         const selectedDay = this.dataset.day;
@@ -148,16 +143,14 @@
         dayButtons.forEach(btn => btn.classList.remove("active-day"));
         this.classList.add("active-day");
 
-        workoutList.innerHTML = "";
-
-        workouts[selectedDay].forEach(workout => {
-          const p = document.createElement("p");
-          p.textContent = workout;
-          workoutList.appendChild(p);
-        });
+        showWorkout(selectedDay);
       });
     });
+
+    // Keeps Wednesday loaded by default when page opens
+    showWorkout("wed");
   </script>
+
   <style>
     .days-row {
       display: flex;
@@ -187,7 +180,6 @@
       font-weight: bold;
     }
 
-    /* INSTAGRAM BUTTON STYLE */
     .instagram-btn {
       position: fixed !important;
       bottom: 20px !important;
@@ -208,7 +200,6 @@
       border: 2px solid white !important;
     }
 
-    /* MESSAGE BUBBLE */
     .instagram-wrapper {
       display: flex;
       align-items: center;
@@ -225,6 +216,6 @@
       white-space: nowrap;
     }
   </style>
-     
+
 </body>
 </html>
